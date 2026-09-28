@@ -79,9 +79,26 @@ const accounts={
    {id:1,title:"Student Council Directory Updated",content:"The Council Core directory now contains the complete 2026–27 Student Council.",priority:"Important",author:"Council Administrator",date:getToday()},
    {id:2,title:"Council Room Guidelines",content:"All council members must maintain the attendance register and keep the Student Council room organised.",priority:"Normal",author:"Council Administrator",date:getToday()}
   ];
-  
-  function getData(key,fallback){const s=localStorage.getItem(key);if(!s){localStorage.setItem(key,JSON.stringify(fallback));return fallback}try{return JSON.parse(s)}catch{return fallback}}
-  function saveData(key,data){localStorage.setItem(key,JSON.stringify(data))}
+  // PASTE YOUR URL HERE
+const API_URL = "https://script.google.com/macros/s/AKfycbzz2rCLx1GmyGA4dcxGWt_HHHHoBkXW6961PRQLUpC8U-X3uqiF_H8E-nctd3jOZaQ9gA/exec";
+
+// Example: To get all tasks from any device
+async function getTasks() {
+  const res = await fetch(`${API_URL}?sheet=Tasks`);
+  const tasks = await res.json();
+  console.log(tasks); // this will show on ALL devices
+  return tasks;
+}
+
+// Example: To add a task from one device
+async function addTask(task) {
+  await fetch(`${API_URL}?sheet=Tasks`, {
+    method: "POST",
+    body: JSON.stringify(task)
+  });
+  alert("Task saved! It will show on all devices now.");
+}
+
   function getToday(){return new Date().toISOString().split("T")[0]}
   
   let students=getData("cc_students_2026_27",officialStudents);
